@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playground | Catálogo 2026 - Xalingo Brinquedos</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --page-bg: #f5e5d6;
+    --playground-bg: #c78c88;
+    --playground-bar: #891434;
+    --playground-text: #5e0e24;
+    --sidebar-w: 220px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Quicksand', sans-serif; background: #e8e0d0; display: flex; min-height: 100vh; }
+
+  .sidebar { width: var(--sidebar-w); min-height: 100vh; background: var(--page-bg); position: fixed; top: 0; left: 0; bottom: 0; z-index: 40; display: flex; flex-direction: column; overflow-y: auto; border-right: 1px solid rgba(0,0,0,0.06); box-shadow: 2px 0 20px rgba(0,0,0,0.08); }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 4px; }
+
+  .sb-header { padding: 16px 14px 12px; border-bottom: 1px solid rgba(0,0,0,0.06); flex-shrink: 0; }
+  .sb-logo { display: block; height: 48px; width: auto; margin-bottom: 8px; }
+
+  .sb-nav { flex: 1; padding: 10px 0; }
+  .sb-cat { margin: 0 10px 4px; border-radius: 12px; overflow: hidden; }
+  .sb-cat-head { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 12px; background: var(--playground-bg); cursor: default; }
+  .sb-cat-bar { width: 4px; height: 24px; border-radius: 3px; flex-shrink: 0; background: var(--playground-bar); }
+  .sb-cat-name { flex: 1; font-size: 0.82rem; font-weight: 700; color: var(--playground-text); line-height: 1.2; }
+
+  .sb-subs { padding: 4px 0; }
+  .sb-sub { display: flex; align-items: center; gap: 8px; padding: 7px 12px 7px 28px; text-decoration: none; font-size: 0.72rem; font-weight: 600; border-radius: 8px; margin: 0 8px; transition: all 0.2s; color: var(--playground-text); }
+  .sb-sub-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; background: var(--playground-bar); }
+  .sb-sub-page { font-size: 0.62rem; font-weight: 700; opacity: 0.35; margin-left: auto; }
+  .sb-sub:hover { background: rgba(255,255,255,0.3); }
+  .sb-sub.active { font-weight: 800; }
+
+  .main { margin-left: var(--sidebar-w); flex: 1; background: #e8e0d0; min-width: 0; zoom: 1.5; }
+  .pages-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; }
+  .page-img { display: block; width: 100%; height: auto; }
+  .section-anchor { display: block; position: relative; top: -10px; visibility: hidden; height: 0; }
+
+  .sb-toggle { display: none; position: fixed; top: 14px; left: 14px; z-index: 60; width: 42px; height: 42px; background: rgba(137,20,52,0.92); color: white; border: 2px solid rgba(255,255,255,0.15); border-radius: 12px; cursor: pointer; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,0.25); transition: all 0.3s; }
+  .sb-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 35; }
+  .back-to-top { position: fixed; bottom: 20px; right: 20px; width: 42px; height: 42px; background: rgba(137,20,52,0.9); color: white; border: 2px solid rgba(255,255,255,0.15); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,0.25); z-index: 30; opacity: 0; pointer-events: none; transition: all 0.3s; }
+  .back-to-top.visible { opacity: 1; pointer-events: auto; }
+  .back-to-top:hover { transform: scale(1.1); }
+
+  @media (max-width: 860px) {
+    .sidebar { transform: translateX(-100%); transition: transform 0.35s ease; }
+    .sidebar.open { transform: translateX(0); }
+    .sb-toggle { display: flex; }
+    .sb-overlay.open { display: block; }
+    .main { margin-left: 0; zoom: 1; }
+    .pages-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<button class="sb-toggle" id="sbToggle" onclick="toggleSidebar()">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+</button>
+<div class="sb-overlay" id="sbOverlay" onclick="toggleSidebar()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sb-header">
+    <img src="logo-xalingo.png" alt="Xalingo" class="sb-logo">
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-cat">
+      <div class="sb-cat-head">
+        <div class="sb-cat-bar"></div>
+        <div class="sb-cat-name">Playground</div>
+      </div>
+      <div class="sb-subs">
+        <a class="sb-sub" href="#balancos"><span class="sb-sub-dot"></span>Balanços<span class="sb-sub-page">149</span></a>
+        <a class="sb-sub" href="#gangorras"><span class="sb-sub-dot"></span>Gangorras<span class="sb-sub-page">150</span></a>
+        <a class="sb-sub" href="#complementos"><span class="sb-sub-dot"></span>Complementos<span class="sb-sub-page">154</span></a>
+        <a class="sb-sub" href="#escorregadores"><span class="sb-sub-dot"></span>Escorregadores<span class="sb-sub-page">156</span></a>
+        <a class="sb-sub" href="#casinhas"><span class="sb-sub-dot"></span>Casinhas<span class="sb-sub-page">158</span></a>
+        <a class="sb-sub" href="#outdoormenor"><span class="sb-sub-dot"></span>Outdoor Menor<span class="sb-sub-page">161</span></a>
+        <a class="sb-sub" href="#outdoormaior"><span class="sb-sub-dot"></span>Outdoor Maior<span class="sb-sub-page">165</span></a>
+      </div>
+    </div>
+  </nav>
+</aside>
+
+<main class="main">
+  <div class="pages-grid">
+    <div style="position:relative"><span class="section-anchor" id="balancos"></span><img class="page-img" src="imagens/playground-p0001.jpg" alt="Playground p0001"></div>
+    <img class="page-img" src="imagens/playground-p0002.jpg" alt="Playground p0002">
+    <div style="position:relative"><span class="section-anchor" id="gangorras"></span><img class="page-img" src="imagens/playground-p0003.jpg" alt="Playground p0003"></div>
+    <img class="page-img" src="imagens/playground-p0004.jpg" alt="Playground p0004">
+    <img class="page-img" src="imagens/playground-p0005.jpg" alt="Playground p0005">
+    <img class="page-img" src="imagens/playground-p0006.jpg" alt="Playground p0006">
+    <div style="position:relative"><span class="section-anchor" id="complementos"></span><img class="page-img" src="imagens/playground-p0007.jpg" alt="Playground p0007"></div>
+    <img class="page-img" src="imagens/playground-p0008.jpg" alt="Playground p0008">
+    <div style="position:relative"><span class="section-anchor" id="escorregadores"></span><img class="page-img" src="imagens/playground-p0009.jpg" alt="Playground p0009"></div>
+    <img class="page-img" src="imagens/playground-p0010.jpg" alt="Playground p0010">
+    <div style="position:relative"><span class="section-anchor" id="casinhas"></span><img class="page-img" src="imagens/playground-p0011.jpg" alt="Playground p0011"></div>
+    <img class="page-img" src="imagens/playground-p0012.jpg" alt="Playground p0012">
+    <img class="page-img" src="imagens/playground-p0013.jpg" alt="Playground p0013">
+    <div style="position:relative"><span class="section-anchor" id="outdoormenor"></span><img class="page-img" src="imagens/playground-p0014.jpg" alt="Playground p0014"></div>
+    <img class="page-img" src="imagens/playground-p0015.jpg" alt="Playground p0015">
+    <img class="page-img" src="imagens/playground-p0016.jpg" alt="Playground p0016">
+    <img class="page-img" src="imagens/playground-p0017.jpg" alt="Playground p0017">
+    <div style="position:relative"><span class="section-anchor" id="outdoormaior"></span><img class="page-img" src="imagens/playground-p0018.jpg" alt="Playground p0018"></div>
+    <img class="page-img" src="imagens/playground-p0019.jpg" alt="Playground p0019">
+    <img class="page-img" src="imagens/playground-p0020.jpg" alt="Playground p0020">
+    <img class="page-img" src="imagens/playground-p0021.jpg" alt="Playground p0021">
+    <img class="page-img" src="imagens/playground-p0022.jpg" alt="Playground p0022">
+    <img class="page-img" src="imagens/playground-p0023.jpg" alt="Playground p0023">
+    <img class="page-img" src="imagens/playground-p0024.jpg" alt="Playground p0024">
+    <img class="page-img" src="imagens/playground-p0025.jpg" alt="Playground p0025">
+    <img class="page-img" src="imagens/playground-p0026.jpg" alt="Playground p0026">
+    <img class="page-img" src="imagens/playground-p0027.jpg" alt="Playground p0027">
+    <img class="page-img" src="imagens/playground-p0028.jpg" alt="Playground p0028">
+    <img class="page-img" src="imagens/playground-p0029.jpg" alt="Playground p0029">
+    <img class="page-img" src="imagens/playground-p0030.jpg" alt="Playground p0030">
+    <img class="page-img" src="imagens/playground-p0031.jpg" alt="Playground p0031">
+    <img class="page-img" src="imagens/playground-p0032.jpg" alt="Playground p0032">
+    <img class="page-img" src="imagens/playground-p0033.jpg" alt="Playground p0033">
+  </div>
+</main>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<script>
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sbOverlay').classList.toggle('open');
+  }
+
+  document.querySelectorAll('.sb-sub').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 860) toggleSidebar();
+      document.querySelectorAll('.sb-sub').forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
+
+  const btnTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    btnTop.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+
+  const sections = ['balancos','gangorras','complementos','escorregadores','casinhas','outdoormenor','outdoormaior'];
+  const subLinks = document.querySelectorAll('.sb-sub');
+  window.addEventListener('scroll', () => {
+    let current = sections[0];
+    for (const id of sections) {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top < 200) current = id;
+    }
+    subLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+  }, { passive: true });
+</script>
+</body>
+</html>
